@@ -148,7 +148,7 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  let nextAscensionAttempt = new Date().getTime() + 60
+  let nextAscensionAttempt = new Date().getTime() + 60 * 1000
 
   while (true) {
     const doAscension = getItem(settings.keys.doAscension) || false
@@ -272,7 +272,7 @@ export async function main(ns) {
           })
       }
 
-      nextAscensionAttempt = new Date().getTime() + 10 * 60
+      nextAscensionAttempt = new Date().getTime() + 10 * 60 * 1000
     }
 
     const myGang = getMyGangInformation(ns)

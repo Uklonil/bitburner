@@ -6,8 +6,8 @@ const settings = {
   minSecurityLevelOffset: 1,
   maxMoneyMultiplayer: 0.9,
   minSecurityWeight: 100,
-  mapRefreshInterval: 24 * 60 * 60,
-  maxWeakenTime: 30 * 60,
+  mapRefreshInterval: 24 * 60 * 60 * 1000,
+  maxWeakenTime: 30 * 60 * 1000,
   keys: {
     serverMap: 'BB_SERVER_MAP',
   },

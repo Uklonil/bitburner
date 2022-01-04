@@ -2,7 +2,7 @@ const settings = {
   keys: {
     crimesStop: 'BB_CRIMES_STOP',
   },
-  intervalToRecheck: 10 * 60,
+  intervalToRecheck: 10 * 60 * 1000,
 }
 
 function getItem(key) {
