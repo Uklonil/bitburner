@@ -50,7 +50,7 @@ function updateServer(ns, serverMap, host) {
     growth: ns.getServerGrowth(host),
     minSecurityLevel: ns.getServerMinSecurityLevel(host),
     baseSecurityLevel: ns.getServerBaseSecurityLevel(host),
-    ram: ns.getServerRam(host)[0],
+    ram: ns.getServerMaxRam(host),
     connections: ['home'],
     parent: 'home',
     children: [],
@@ -69,11 +69,11 @@ function getPurchasedServers(ns) {
   let purchasedServers = ns.getPurchasedServers()
   if (purchasedServers.length) {
     purchasedServers.sort((a, b) => {
-      const totalRamA = ns.getServerRam(a).shift()
-      const totalRamB = ns.getServerRam(b).shift()
+      const totalRamA = ns.getServerMaxRam(a)
+      const totalRamB = ns.getServerMaxRam(b)
 
       if (totalRamA === totalRamB) {
-        return ns.getServerRam(a).shift() - ns.getServerRam(b).shift()
+        return ns.getServerMaxRam(a) - ns.getServerMaxRam(b)
       } else {
         return totalRamA - totalRamB
       }
