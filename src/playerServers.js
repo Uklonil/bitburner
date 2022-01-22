@@ -119,7 +119,7 @@ export async function main(ns) {
 
       if (ns.getServerMoneyAvailable('home') * settings.totalMoneyAllocation >= targetRam * settings.gbRamCost) {
         let hostname = `pserv-${targetRam}-${createUUID()}`
-        hostname = ns.purchaseServer(hostname, targetRam)
+        hostname = await ns.purchaseServer(hostname, targetRam)
 
         if (hostname) {
           ns.tprint(`[${localeHHMMSS()}] Bought new server: ${hostname} (${targetRam} GB)`)
