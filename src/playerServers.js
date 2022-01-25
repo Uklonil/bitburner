@@ -121,7 +121,7 @@ export async function main(ns) {
         let hostname = `pserv-${targetRam}-${createUUID()}`
         hostname = await ns.purchaseServer(hostname, targetRam)
 
-        if (hostname) {
+        if (await ns.serverExists(hostname)) {
           ns.tprint(`[${localeHHMMSS()}] Bought new server: ${hostname} (${targetRam} GB)`)
 
           updateServer(ns, serverMap, hostname)
@@ -166,7 +166,7 @@ export async function main(ns) {
               if (serverDeleted) {
                 hostname = await ns.purchaseServer(hostname, targetRam)
 
-                if (hostname) {
+                if (await ns.serverExists(hostname)) {
                   ns.tprint(`[${localeHHMMSS()}] Upgraded: ${purchasedServers[0]} into server: ${hostname} (${targetRam} GB)`)
 
                   updateServer(ns, serverMap, hostname)
