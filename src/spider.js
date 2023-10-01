@@ -1,4 +1,4 @@
-import { settings, setItem, localeHHMMSS, getPlayerDetails, hackPrograms } from 'common.js'
+import { settings, setItem, localeHHMMSS, getPlayerDetails } from 'common.js'
 
 function allHacks(host) {
   ns.brutessh(host)
@@ -40,7 +40,7 @@ export async function main(ns) {
     const playerDetails = getPlayerDetails(ns)
     if (!ns.hasRootAccess(host)) {
       if (serverMap.servers[host].ports <= playerDetails.portHacks && serverMap.servers[host].hackingLevel <= playerDetails.hackingLevel) {
-        hackPrograms.forEach((hackProgram) => {
+        settings.hackPrograms.forEach((hackProgram) => {
           if (ns.fileExists(hackProgram, 'home')) {
             ns[hackProgram.split('.').shift().toLocaleLowerCase()](host)
           }
