@@ -1,21 +1,4 @@
-import { settings, setItem } from 'common.js'
-
-const hackPrograms = ['BruteSSH.exe', 'FTPCrack.exe', 'relaySMTP.exe', 'HTTPWorm.exe', 'SQLInject.exe']
-
-function getPlayerDetails(ns) {
-  let portHacks = 0
-
-  hackPrograms.forEach((hackProgram) => {
-    if (ns.fileExists(hackProgram, 'home')) {
-      portHacks += 1
-    }
-  })
-
-  return {
-    hackingLevel: ns.getHackingLevel(),
-    portHacks,
-  }
-}
+import { settings, setItem, localeHHMMSS, getPlayerDetails, hackPrograms } from 'common.js'
 
 function allHacks(host) {
   ns.brutessh(host)
@@ -23,14 +6,6 @@ function allHacks(host) {
   ns.relaysmtp(host)
   ns.httpworm(host)
   ns.sqlinject(host)
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
 }
 
 export async function main(ns) {
@@ -58,7 +33,7 @@ export async function main(ns) {
       growth: ns.getServerGrowth(host),
       minSecurityLevel: ns.getServerMinSecurityLevel(host),
       baseSecurityLevel: ns.getServerBaseSecurityLevel(host),
-      ram: ns.getServerRam(host)[0],
+      ram: ns.getServerMaxRam(host),
       files: ns.ls(host),
     }
 
@@ -139,7 +114,7 @@ export async function main(ns) {
     })
   }
 
-  setItem(settings().keys.serverMap, serverMap)
+  setItem(settings.keys.serverMap, serverMap)
 
   if (!scriptToRunAfter) {
     ns.tprint(`[${localeHHMMSS()}] Spawning mainHack.js`)

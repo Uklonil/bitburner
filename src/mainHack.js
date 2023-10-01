@@ -1,83 +1,7 @@
-const settings = {
-  homeRamReserved: 20,
-  homeRamReservedBase: 20,
-  homeRamExtraRamReserved: 12,
-  homeRamBigMode: 64,
-  minSecurityLevelOffset: 1,
-  maxMoneyMultiplayer: 0.9,
-  minSecurityWeight: 100,
-  mapRefreshInterval: 24 * 60 * 60 * 1000,
-  maxWeakenTime: 30 * 60 * 1000,
-  keys: {
-    serverMap: 'BB_SERVER_MAP',
-  },
-  changes: {
-    hack: 0.002,
-    grow: 0.004,
-    weaken: 0.05,
-  },
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
-
-const hackPrograms = ['BruteSSH.exe', 'FTPCrack.exe', 'relaySMTP.exe', 'HTTPWorm.exe', 'SQLInject.exe']
-const hackScripts = ['hack.js', 'grow.js', 'weaken.js']
-
-function getPlayerDetails(ns) {
-  let portHacks = 0
-
-  hackPrograms.forEach((hackProgram) => {
-    if (ns.fileExists(hackProgram, 'home')) {
-      portHacks += 1
-    }
-  })
-
-  return {
-    hackingLevel: ns.getHackingLevel(),
-    portHacks,
-  }
-}
-
-function convertMSToHHMMSS(ms = 0) {
-  if (ms <= 0) {
-    return '00:00:00'
-  }
-
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toISOString().substr(11, 8)
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
+import { settings, getItem, setItem, localeHHMMSS, getPlayerDetails, convertMSToHHMMSS, hackPrograms, hackScripts, createUUID } from 'common.js'
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-}
-
-function createUUID() {
-  var dt = new Date().getTime()
-  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (dt + Math.random() * 16) % 16 | 0
-    dt = Math.floor(dt / 16)
-    return (c == 'x' ? r : (r & 0x3) | 0x8).toString(16)
-  })
-  return uuid
 }
 
 function weakenCyclesForGrow(growCycles) {
@@ -149,6 +73,7 @@ function findTargetServer(ns, serversList, servers, serverExtraData) {
 }
 
 export async function main(ns) {
+
   ns.tprint(`[${localeHHMMSS()}] Starting mainHack.js`)
 
   let hostname = ns.getHostname()
