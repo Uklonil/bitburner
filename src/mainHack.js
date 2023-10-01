@@ -1,4 +1,4 @@
-import { settings, getItem, setItem, localeHHMMSS, getPlayerDetails, convertMSToHHMMSS, hackPrograms, hackScripts, createUUID } from 'common.js'
+import { settings, getItem, setItem, localeHHMMSS, getPlayerDetails, convertMSToHHMMSS, createUUID } from 'common.js'
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
@@ -23,7 +23,7 @@ async function getHackableServers(ns, servers) {
   for (const hostname of hackableServers) {
     if (hostname === 'home') continue;
     if (!ns.hasRootAccess(hostname)) {
-      hackPrograms.forEach((hackProgram) => {
+      settings.hackPrograms.forEach((hackProgram) => {
         if (ns.fileExists(hackProgram, 'home')) {
           ns[hackProgram.split('.').shift().toLocaleLowerCase()](hostname)
         }
@@ -31,7 +31,7 @@ async function getHackableServers(ns, servers) {
       ns.nuke(hostname)
     }
 
-    await ns.scp(hackScripts, hostname)
+    await ns.scp(settings.hackScripts, hostname)
 
   }
 
