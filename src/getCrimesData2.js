@@ -1,40 +1,4 @@
-const settings = {
-  keys: {
-    crimes: 'BB_CRIMES',
-  },
-  crimes: [
-    'shoplift',
-    'rob store',
-    'mug',
-    'larceny',
-    'deal drugs',
-    'bond forgery',
-    'traffick arms',
-    'homicide',
-    'grand theft auto',
-    'kidnap',
-    'assassinate',
-    'heist',
-  ],
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
+import { settings, getItem, setItem, localeHHMMSS} from 'common.js'
 
 export async function main(ns) {
   ns.tprint(`[${localeHHMMSS()}] Starting getCrimesData2.js`)
@@ -51,7 +15,7 @@ export async function main(ns) {
   const crimes = {}
 
   settings.crimes.map((crime) => {
-    const stats = ns.getCrimeStats(crime)
+    const stats = ns.singularity.getCrimeStats(crime)
 
     crimes[crime] = { ...crimesCache[crime], stats }
   })

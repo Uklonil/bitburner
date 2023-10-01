@@ -1,28 +1,4 @@
-const settings = {
-  keys: {
-    crimes: 'BB_CRIMES',
-    crimesStop: 'BB_CRIMES_STOP',
-  },
-  intervalToRecheck: 10 * 60 * 1000,
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
+import { settings, getItem, setItem, localeHHMMSS} from 'common.js'
 
 function getCrimesData(ns) {
   ns.tprint(`[${localeHHMMSS()}] Spawning getCrimesData.js`)
@@ -79,12 +55,12 @@ export async function main(ns) {
     if (crimesStop || new Date().getTime() > endTime) {
       continueCommitingCrime = false
     } else {
-      while (ns.isBusy()) {
+      while (ns.singularity.isBusy()) {
         await ns.sleep(100)
       }
 
       ns.tprint(`[${localeHHMMSS()}] Commiting crime: ${crimeToCommit}`)
-      ns.commitCrime(crimeToCommit)
+      ns.singularity.commitCrime(crimeToCommit)
       await ns.sleep(crimes[crimeToCommit].stats.time + 5)
     }
   }

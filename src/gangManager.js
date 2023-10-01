@@ -1,22 +1,4 @@
-const settings = {
-  keys: {
-    buyEquipment: 'BB_BUY_EQUIPMENT',
-    doAscension: 'BB_DO_ASCENSION',
-    strAscMultHardLimit: 'BB_STR_ASC_MULT_HARD_LIMIT',
-    equipmentList: 'BB_EQUIPMENT_LIST',
-    augumentationList: 'BB_AUGUMENTATION_LIST',
-  },
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
+import { settings, getItem, setItem, localeHHMMSS} from 'common.js'
 
 const gangMemberNamesList = [
   'Darth Vader',
@@ -50,16 +32,6 @@ const gangMemberNamesList = [
   'Hector Barbossa',
   'Xenomorph',
 ]
-
-const equipmentTypes = ['Weapon', 'Armor', 'Vehicle', 'Rootkit', 'Augmentation']
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
 
 function getMyGangInformation(ns) {
   return ns.gang.getGangInformation()

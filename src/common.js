@@ -7,7 +7,39 @@ export const settings = {
     serverMap: 'BB_SERVER_MAP',
     hackTarget: 'BB_HACK_TARGET',
     action: 'BB_ACTION',
+    crimesStop: 'BB_CRIMES_STOP',
+    buyEquipment: 'BB_BUY_EQUIPMENT',
+    doAscension: 'BB_DO_ASCENSION',
+    strAscMultHardLimit: 'BB_STR_ASC_MULT_HARD_LIMIT',
+    equipmentList: 'BB_EQUIPMENT_LIST',
+    augumentationList: 'BB_AUGUMENTATION_LIST',
   },
+  crimes: [
+    'shoplift',
+    'rob store',
+    'mug',
+    'larceny',
+    'deal drugs',
+    'bond forgery',
+    'traffick arms',
+    'homicide',
+    'grand theft auto',
+    'kidnap',
+    'assassinate',
+    'heist',
+  ],
+  hackPrograms : [
+    'BruteSSH.exe',
+    'FTPCrack.exe',
+    'relaySMTP.exe',
+    'HTTPWorm.exe',
+    'SQLInject.exe'
+  ],
+  hackScripts : [
+    'hack.js',
+    'grow.js',
+    'weaken.js'
+  ],
   homeRamReserved: 20,
   homeRamReservedBase: 20,
   homeRamExtraRamReserved: 12,
@@ -19,9 +51,6 @@ export const settings = {
     weaken: 0.05,
   },
 }
-
-export const hackPrograms = ['BruteSSH.exe', 'FTPCrack.exe', 'relaySMTP.exe', 'HTTPWorm.exe', 'SQLInject.exe']
-export const hackScripts = ['hack.js', 'grow.js', 'weaken.js']
 
 export function getItem(key) {
   let item = localStorage.getItem(key)

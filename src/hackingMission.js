@@ -1,32 +1,12 @@
+import { settings, getItem, setItem, localeHHMMSS} from 'common.js'
 // based on https://github.com/Penndrageist/bitburner-scripts/blob/master/scripts/HackingMission.js.js
 ;(function (document) {
-  const settings = {
-    keys: {
-      doAuto: 'BB_DO_AUTO',
-    },
-  }
 
   let lastValues = {
     player: [],
     enemy: [],
     readTime: 0,
     timeoutInstance: undefined,
-  }
-
-  function getItem(key) {
-    let item = localStorage.getItem(key)
-
-    try {
-      item = JSON.parse(item)
-    } catch (e) {
-      item = undefined
-    }
-
-    return item ? item : undefined
-  }
-
-  function setItem(key, value) {
-    localStorage.setItem(key, JSON.stringify(value))
   }
 
   // from https://gist.github.com/jpillora/7382441

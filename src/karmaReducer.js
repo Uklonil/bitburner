@@ -1,27 +1,4 @@
-const settings = {
-  keys: {
-    crimesStop: 'BB_CRIMES_STOP',
-  },
-  intervalToRecheck: 10 * 60 * 1000,
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function setItem(key, value) {
-  localStorage.setItem(key, JSON.stringify(value))
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
+import { settings, getItem, setItem, localeHHMMSS} from 'common.js'
 
 export async function main(ns) {
   ns.tprint(`[${localeHHMMSS()}] Starting karmaReducer.js`)
@@ -41,12 +18,12 @@ export async function main(ns) {
     if (crimesStop) {
       continueCommitingCrime = false
     } else {
-      while (ns.isBusy()) {
+      while (ns.singularity.isBusy()) {
         await ns.sleep(100)
       }
 
       ns.tprint(`[${localeHHMMSS()}] Commiting crime: ${crimeToCommit}`)
-      ns.commitCrime(crimeToCommit)
+      ns.singularity.commitCrime(crimeToCommit)
       await ns.sleep(1000)
     }
   }
