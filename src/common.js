@@ -73,7 +73,7 @@ export function localeHHMMSS(ms = 0) {
 export function getPlayerDetails(ns) {
   let portHacks = 0
 
-  hackPrograms.forEach((hackProgram) => {
+  settings.hackPrograms.forEach((hackProgram) => {
     if (ns.fileExists(hackProgram, 'home')) {
       portHacks += 1
     }
@@ -110,8 +110,6 @@ export function createUUID() {
 export async function main(ns) {
   return {
     settings,
-    hackPrograms,
-    hackScripts,
     getItem,
     setItem,
     localeHHMMSS,
