@@ -7,7 +7,7 @@ function getCrimesData(ns) {
 
 function selectCrime(crimes) {
   const crimesList = Object.keys(crimes)
-  crimesList.sort((a, b) => crimes[b].chance - crimes[a].chance)
+  crimesList.sort((a, b) => getCrimeWeight(crimes[b]) - getCrimeWeight(crimes[a]))
   const solidChanceCrimes = crimesList.filter((crime) => crimes[crime].chance >= 0.8)
   const topCrimesList = solidChanceCrimes.length > 3 ? solidChanceCrimes : crimesList.slice(0, 2)
 
@@ -15,10 +15,7 @@ function selectCrime(crimes) {
   let bestCrimeWeight = 0
 
   topCrimesList.forEach((crime) => {
-    const crimeWeight =
-      crimes[crime].chance *
-      (crimes[crime].stats.money / crimes[crime].stats.time) *
-      ((crimes[crime].stats.intelligence_exp * 0.1 + 1) / (crimes[crime].stats.intelligence_exp * 0.1 + 2))
+    const crimeWeight = getCrimeWeight(crimes[crime])
 
     if (crimeWeight > bestCrimeWeight) {
       bestCrime = crime
@@ -27,6 +24,12 @@ function selectCrime(crimes) {
   })
 
   return bestCrime
+}
+
+function getCrimeWeight(crime){
+  return crime.chance *
+      (crime.stats.money / crime.stats.time) *
+      ((crime.stats.intelligence_exp * 0.1 + 1) / (crime.stats.intelligence_exp * 0.1 + 2))
 }
 
 export async function main(ns) {

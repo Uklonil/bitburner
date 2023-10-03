@@ -1,22 +1,4 @@
-const settings = {
-  keys: {
-    serverMap: 'BB_SERVER_MAP',
-  },
-}
-
-function getItem(key) {
-  let item = localStorage.getItem(key)
-
-  return item ? JSON.parse(item) : undefined
-}
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
+import { settings, getItem, localeHHMMSS} from 'common.js'
 
 function printPathToServer(servers, serverToFind) {
   if (serverToFind === 'home') return 'home'
