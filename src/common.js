@@ -146,6 +146,10 @@ export function createUUID() {
   return uuid
 }
 
+export function setTextColor(RED,GRN,BLU){
+  return `\u001b[38;2;${RED};${GRN};${BLU}m`
+}
+
 export async function main(ns) {
   return {
     settings,
@@ -154,6 +158,7 @@ export async function main(ns) {
     localeHHMMSS,
     getPlayerDetails,
     convertMSToHHMMSS,
-    createUUID
+    createUUID,
+    setTextColor
   }
 }
