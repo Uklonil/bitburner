@@ -1,4 +1,5 @@
-import { settings, getItem, localeHHMMSS} from 'common.js'
+import {settings} from '/common/settings.js'
+import { getItem, localeHHMMSS} from '/common/common.js'
 
 function printPathToServer(servers, serverToFind) {
   if (serverToFind === 'home') return 'home'

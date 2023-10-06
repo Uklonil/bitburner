@@ -1,12 +1,5 @@
-import { settings, setItem, localeHHMMSS, getPlayerDetails } from 'common.js'
-
-function allHacks(host) {
-  ns.brutessh(host)
-  ns.ftpcrack(host)
-  ns.relaysmtp(host)
-  ns.httpworm(host)
-  ns.sqlinject(host)
-}
+import {settings} from '/common/settings.js'
+import { setItem, localeHHMMSS, getPlayerDetails } from '/common/common.js'
 
 export async function main(ns) {
   ns.tprint(`[${localeHHMMSS()}] Starting spider.js`)

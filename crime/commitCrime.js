@@ -1,4 +1,5 @@
-import { settings, getItem, setItem, localeHHMMSS} from 'common.js'
+import { settings } from '/common/settings.js'
+import { getItem, setItem, localeHHMMSS } from '/common/common.js'
 
 function getCrimesData(ns) {
   ns.tprint(`[${localeHHMMSS()}] Spawning getCrimesData.js`)
