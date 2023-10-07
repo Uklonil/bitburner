@@ -150,6 +150,10 @@ export function setTextColor(RED,GRN,BLU){
   return `\u001b[38;2;${RED};${GRN};${BLU}m`
 }
 
+export function serverInNetwork(hostname){
+  return Object.keys(getItem(settings.keys.serverMap)).includes(hostname);
+}
+
 export async function main(ns) {
   return {
     settings,
