@@ -1,4 +1,4 @@
-import {settings} from '/common/settings.js'
+import { keys, crimes } from '/common/settings.js'
 import { getItem, setItem, localeHHMMSS} from '/common/common.js'
 
 export async function main(ns) {
@@ -12,16 +12,16 @@ export async function main(ns) {
     throw new Exception('Run the script from home')
   }
 
-  const crimesCache = getItem(settings.keys.crimes) || {}
-  const crimes = {}
+  const crimesCache = getItem(keys.crimes) || {}
+  const crimesArray = {}
 
-  settings.crimes.map((crime) => {
+  crimes.map((crime) => {
     const stats = ns.singularity.getCrimeStats(crime)
 
-    crimes[crime] = { ...crimesCache[crime], stats }
+    crimesArray[crime] = { ...crimesCache[crime], stats }
   })
 
-  setItem(settings.keys.crimes, crimes)
+  setItem(keys.crimes, crimesArray)
 
   if (scriptToRunAfter) {
     ns.tprint(`[${localeHHMMSS()}] Spawning ${scriptToRunAfter}`)

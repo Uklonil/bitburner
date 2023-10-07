@@ -1,38 +1,5 @@
-import {settings} from '/common/settings.js'
+import { keys, gangMemberNamesList, SORT_TYPES, DIRECTIONS} from '/common/settings.js'
 import { getItem, setItem, localeHHMMSS} from '/common/common.js'
-
-const gangMemberNamesList = [
-  'Darth Vader',
-  'Joker',
-  'Two-Face',
-  'Warden Norton',
-  'Hannibal Lecter',
-  'Sauron',
-  'Bane',
-  'Tyler Durden',
-  'Agent Smith',
-  'Gollum',
-  'Vincent Vega',
-  'Saruman',
-  'Loki',
-  'Vito Corleone',
-  'Balrog',
-  'Palpatine',
-  'Michael Corleone',
-  'Talia al Ghul',
-  'John Doe',
-  'Scarecrow',
-  'Commodus',
-  'Jabba the Hutt',
-  'Scar',
-  'Grand Moff Tarkin',
-  'Boba Fett',
-  'Thanos',
-  'Terminator',
-  'Frank Costello',
-  'Hector Barbossa',
-  'Xenomorph',
-]
 
 function getMyGangInformation(ns) {
   return ns.gang.getGangInformation()
@@ -54,18 +21,6 @@ function getMemberAbilities(ns, name) {
   return { terrorismAbilities, vigilantieAbilities, str: gangMemberInfo.str }
 }
 
-const SORT_TYPES = {
-  VIGILANTIE: 'Vigilantie',
-  TERRORISM: 'Terrorism',
-  REPUTATION: 'Reputation',
-  STR: 'Strength',
-  STR_MULT: 'Strength Multiplier',
-  STR_ASC_MULT: 'Strength Ascencion Multiplier',
-}
-const DIRECTIONS = {
-  ASC: 'Ascending',
-  DESC: 'Descending',
-}
 function sortBy(ns, sortType = null, direction = DIRECTIONS.ASC) {
   return function (a, b) {
     const memberInfoA = getMemberInformation(ns, a)
@@ -124,15 +79,15 @@ export async function main(ns) {
   let nextAscensionAttempt = new Date().getTime() + 60 * 1000
 
   while (true) {
-    const doAscension = getItem(settings.keys.doAscension) || false
-    const buyEquipment = getItem(settings.keys.buyEquipment) || false
-    const strengthAscensionMultHardLimit = getItem(settings.keys.strAscMultHardLimit) || 10
-    setItem(settings.keys.doAscension, doAscension)
-    setItem(settings.keys.buyEquipment, buyEquipment)
-    setItem(settings.keys.strAscMultHardLimit, strengthAscensionMultHardLimit)
+    const doAscension = getItem(keys.doAscension) || false
+    const buyEquipment = getItem(keys.buyEquipment) || false
+    const strengthAscensionMultHardLimit = getItem(keys.strAscMultHardLimit) || 10
+    setItem(keys.doAscension, doAscension)
+    setItem(keys.buyEquipment, buyEquipment)
+    setItem(keys.strAscMultHardLimit, strengthAscensionMultHardLimit)
 
-    const equipmentsToBuy = getItem(settings.keys.equipmentList) || []
-    const augumentationssToBuy = getItem(settings.keys.augumentationList) || []
+    const equipmentsToBuy = getItem(keys.equipmentList) || []
+    const augumentationssToBuy = getItem(keys.augumentationList) || []
 
     while (ns.gang.canRecruitMember()) {
       const gangMemberNames = getMemberNames(ns)

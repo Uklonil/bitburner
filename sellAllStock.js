@@ -1,13 +1,7 @@
+import { localeHHMMSS } from "/common/common";
+
 const commission = 100000
 let stockSymbols
-
-function localeHHMMSS(ms = 0) {
-  if (!ms) {
-    ms = new Date().getTime()
-  }
-
-  return new Date(ms).toLocaleTimeString()
-}
 
 function sellShorts(ns, stockSymbol) {
   const stockInfo = getStockInfo(ns, stockSymbol)

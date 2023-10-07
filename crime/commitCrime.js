@@ -1,4 +1,4 @@
-import { settings } from '/common/settings.js'
+import { keys, intervalToRecheck } from '/common/settings.js'
 import { getItem, setItem, localeHHMMSS } from '/common/common.js'
 
 function getCrimesData(ns) {
@@ -43,7 +43,7 @@ export async function main(ns) {
   }
 
   let continueCommitingCrime = true
-  const crimes = getItem(settings.keys.crimes)
+  const crimes = getItem(keys.crimes)
 
   if (!crimes) {
     getCrimesData(ns)
@@ -51,10 +51,10 @@ export async function main(ns) {
   }
 
   const crimeToCommit = selectCrime(crimes)
-  const endTime = new Date().getTime() + settings.intervalToRecheck
+  const endTime = new Date().getTime() + intervalToRecheck
 
   while (continueCommitingCrime) {
-    const crimesStop = getItem(settings.keys.crimesStop)
+    const crimesStop = getItem(keys.crimesStop)
 
     if (crimesStop || new Date().getTime() > endTime) {
       continueCommitingCrime = false
@@ -69,10 +69,10 @@ export async function main(ns) {
     }
   }
 
-  const crimesStop = getItem(settings.keys.crimesStop)
+  const crimesStop = getItem(keys.crimesStop)
   if (!crimesStop) {
     getCrimesData(ns)
   } else {
-    setItem(settings.keys.crimesStop, false)
+    setItem(keys.crimesStop, false)
   }
 }
