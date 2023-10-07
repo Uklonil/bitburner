@@ -1,6 +1,5 @@
 // Based on https://github.com/danielyxie/bitburner/blob/master/src/data/codingcontracttypes.ts
-import {settings} from '/common/settings.js'
-import { getItem, localeHHMMSS} from '/common/common.js'
+import { settings, getItem, localeHHMMSS} from 'common.js'
 
 function convert2DArrayToString(arr) {
   var components = []

@@ -1,5 +1,4 @@
-import {settings} from '/common/settings.js'
-import { getItem, setItem, localeHHMMSS} from '/common/common.js'
+import { settings, getItem, setItem, localeHHMMSS} from 'common.js'
 
 const gangMemberNamesList = [
   'Darth Vader',

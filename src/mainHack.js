@@ -1,5 +1,4 @@
-import {settings} from '/common/settings.js'
-import { getItem, setItem, localeHHMMSS, getPlayerDetails, convertMSToHHMMSS, createUUID } from '/common/common.js'
+import { settings, getItem, setItem, localeHHMMSS, getPlayerDetails, convertMSToHHMMSS, createUUID } from 'common.js'
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
