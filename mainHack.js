@@ -1,18 +1,4 @@
-import {
-  changes,
-  hackPrograms,
-  hackScripts,
-  homeRamBigMode,
-  keys,
-  maxWeakenTime,
-  minSecurityWeight,
-  homeRamReserved,
-  homeRamReservedBase,
-  homeRamExtraRamReserved,
-  mapRefreshInterval,
-  minSecurityLevelOffset,
-  maxMoneyMultiplayer
-} from '/common/settings.js'
+import {settings} from '/common/settings.js'
 import { getItem, setItem, localeHHMMSS, getPlayerDetails, convertMSToHHMMSS, createUUID } from '/common/common.js'
 
 function numberWithCommas(x) {
@@ -20,11 +6,11 @@ function numberWithCommas(x) {
 }
 
 function weakenCyclesForGrow(growCycles) {
-  return Math.max(0, Math.ceil(growCycles * (changes.grow / changes.weaken)))
+  return Math.max(0, Math.ceil(growCycles * (settings.changes.grow / settings.changes.weaken)))
 }
 
 function weakenCyclesForHack(hackCycles) {
-  return Math.max(0, Math.ceil(hackCycles * (changes.hack / changes.weaken)))
+  return Math.max(0, Math.ceil(hackCycles * (settings.changes.hack / settings.changes.weaken)))
 }
 
 async function getHackableServers(ns, servers) {
@@ -38,7 +24,7 @@ async function getHackableServers(ns, servers) {
   for (const hostname of hackableServers) {
     if (hostname === 'home') continue;
     if (!ns.hasRootAccess(hostname)) {
-      hackPrograms.forEach((hackProgram) => {
+      settings.hackPrograms.forEach((hackProgram) => {
         if (ns.fileExists(hackProgram, 'home')) {
           ns[hackProgram.split('.').shift().toLocaleLowerCase()](hostname)
         }
@@ -46,7 +32,7 @@ async function getHackableServers(ns, servers) {
       ns.nuke(hostname)
     }
 
-    await ns.scp(hackScripts, hostname)
+    await ns.scp(settings.hackScripts, hostname)
 
   }
 
@@ -61,7 +47,7 @@ function findTargetServer(ns, serversList, servers, serverExtraData) {
     .filter((hostname) => servers[hostname].hackingLevel <= playerDetails.hackingLevel)
     .filter((hostname) => servers[hostname].maxMoney)
     .filter((hostname) => hostname !== 'home')
-    .filter((hostname) => ns.getWeakenTime(hostname) < maxWeakenTime)
+    .filter((hostname) => ns.getWeakenTime(hostname) < settings.maxWeakenTime)
 
   let weightedServers = serversList.map((hostname) => {
     const fullHackCycles = Math.ceil(100 / Math.max(0.00000001, ns.hackAnalyze(hostname)))
@@ -70,7 +56,7 @@ function findTargetServer(ns, serversList, servers, serverExtraData) {
       fullHackCycles,
     }
 
-    const serverValue = servers[hostname].maxMoney * (minSecurityWeight / (servers[hostname].minSecurityLevel + ns.getServerSecurityLevel(hostname)))
+    const serverValue = servers[hostname].maxMoney * (settings.minSecurityWeight / (servers[hostname].minSecurityLevel + ns.getServerSecurityLevel(hostname)))
 
     return {
       hostname,
@@ -99,18 +85,18 @@ export async function main(ns) {
 
   while (true) {
     const serverExtraData = {}
-    const serverMap = getItem(keys.serverMap)
-    if (serverMap.servers.home.ram >= homeRamBigMode) {
-      homeRamReserved = homeRamReservedBase + homeRamExtraRamReserved
+    const serverMap = getItem(settings.keys.serverMap)
+    if (serverMap.servers.home.ram >= settings.homeRamBigMode) {
+      settings.homeRamReserved = settings.homeRamReservedBase + settings.homeRamExtraRamReserved
     }
 
-    if (!serverMap || serverMap.lastUpdate < new Date().getTime() - mapRefreshInterval) {
+    if (!serverMap || serverMap.lastUpdate < new Date().getTime() - settings.mapRefreshInterval) {
       ns.tprint(`[${localeHHMMSS()}] Spawning spider.js`)
       ns.spawn('spider.js', 1, 'mainHack.js')
       ns.exit()
       return
     }
-    serverMap.servers.home.ram = Math.max(0, serverMap.servers.home.ram - homeRamReserved)
+    serverMap.servers.home.ram = Math.max(0, serverMap.servers.home.ram - settings.homeRamReserved)
 
     const hackableServers = await getHackableServers(ns, serverMap.servers)
 
@@ -127,9 +113,9 @@ export async function main(ns) {
     const money = ns.getServerMoneyAvailable(bestTarget)
 
     let action = 'weaken'
-    if (securityLevel > serverMap.servers[bestTarget].minSecurityLevel + minSecurityLevelOffset) {
+    if (securityLevel > serverMap.servers[bestTarget].minSecurityLevel + settings.minSecurityLevelOffset) {
       action = 'weaken'
-    } else if (money < serverMap.servers[bestTarget].maxMoney * maxMoneyMultiplayer) {
+    } else if (money < serverMap.servers[bestTarget].maxMoney * settings.maxMoneyMultiplayer) {
       action = 'grow'
     } else {
       action = 'hack'
@@ -162,8 +148,8 @@ export async function main(ns) {
     ns.tprint(`[${localeHHMMSS()}] Delays: ${convertMSToHHMMSS(hackDelay)} for hacks, ${convertMSToHHMMSS(growDelay)} for grows`)
 
     if (action === 'weaken') {
-      if (changes.weaken * weakenCycles > securityLevel - serverMap.servers[bestTarget].minSecurityLevel) {
-        weakenCycles = Math.ceil((securityLevel - serverMap.servers[bestTarget].minSecurityLevel) / changes.weaken)
+      if (settings.changes.weaken * weakenCycles > securityLevel - serverMap.servers[bestTarget].minSecurityLevel) {
+        weakenCycles = Math.ceil((securityLevel - serverMap.servers[bestTarget].minSecurityLevel) / settings.changes.weaken)
         growCycles -= weakenCycles
         growCycles = Math.max(0, growCycles)
 
@@ -175,7 +161,7 @@ export async function main(ns) {
       }
 
       ns.tprint(
-        `[${localeHHMMSS()}] Cycles ratio: ${growCycles} grow cycles; ${weakenCycles} weaken cycles; expected security reduction: ${Math.floor(changes.weaken * weakenCycles * 1000) / 1000
+        `[${localeHHMMSS()}] Cycles ratio: ${growCycles} grow cycles; ${weakenCycles} weaken cycles; expected security reduction: ${Math.floor(settings.changes.weaken * weakenCycles * 1000) / 1000
         }`
       )
 

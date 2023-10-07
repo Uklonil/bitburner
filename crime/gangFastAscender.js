@@ -1,4 +1,4 @@
-import { keys, SORT_TYPES, DIRECTIONS } from '/common/settings.js'
+import {settings} from '/common/settings.js'
 import { getItem, setItem, localeHHMMSS} from '/common/common.js'
 
 function getMemberNames(ns) {
@@ -13,6 +13,21 @@ function getMoney(ns) {
   return ns.getServerMoneyAvailable('home') - 1000000000
 }
 
+const SORT_TYPES = {
+  VIGILANTIE: 'Vigilantie',
+  TERRORISM: 'Terrorism',
+  REPUTATION: 'Reputation',
+  STR: 'Strength',
+  STR_MULT: 'Strength Multiplier',
+  STR_ASC_MULT: 'Strength Ascencion Multiplier',
+  DEX: 'Dexterity',
+  DEX_MULT: 'Dexterity Multiplier',
+  DEX_ASC_MULT: 'Dexterity Ascencion Multiplier',
+}
+const DIRECTIONS = {
+  ASC: 'Ascending',
+  DESC: 'Descending',
+}
 function sortBy(ns, sortType = null, direction = DIRECTIONS.ASC) {
   return function (a, b) {
     const memberInfoA = getMemberInformation(ns, a)
@@ -78,12 +93,12 @@ export async function main(ns) {
   }
 
   if (getMoney(ns) > 0) {
-    const doAscension = getItem(keys.doAscension) || false
-    const buyEquipment = getItem(keys.buyEquipment) || false
-    const strengthAscensionMultHardLimit = getItem(keys.strAscMultHardLimit) || 100
-    setItem(keys.doAscension, doAscension)
-    setItem(keys.buyEquipment, buyEquipment)
-    setItem(keys.strAscMultHardLimit, strengthAscensionMultHardLimit)
+    const doAscension = getItem(settings.keys.doAscension) || false
+    const buyEquipment = getItem(settings.keys.buyEquipment) || false
+    const strengthAscensionMultHardLimit = getItem(settings.keys.strAscMultHardLimit) || 100
+    setItem(settings.keys.doAscension, doAscension)
+    setItem(settings.keys.buyEquipment, buyEquipment)
+    setItem(settings.keys.strAscMultHardLimit, strengthAscensionMultHardLimit)
 
     const baseballBat = 'Baseball Bat'
 

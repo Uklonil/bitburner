@@ -1,5 +1,3 @@
-import { localeHHMMSS } from "/common/common";
-
 const stockSymbols = ['ECP', 'BLD', 'OMTK', 'FSIG', 'FLCM', 'CTYS']
 const avgTrackers = {}
 const profitTrackers = {}
@@ -7,6 +5,14 @@ const risingTrackers = {}
 const firstInvests = {}
 
 let corpus
+
+function localeHHMMSS(ms = 0) {
+  if (!ms) {
+    ms = new Date().getTime()
+  }
+
+  return new Date(ms).toLocaleTimeString()
+}
 
 const average = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length
 

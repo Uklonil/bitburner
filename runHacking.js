@@ -1,4 +1,10 @@
-import { localeHHMMSS } from "/common/common.js";
+function localeHHMMSS(ms = 0) {
+  if (!ms) {
+    ms = new Date().getTime()
+  }
+
+  return new Date(ms).toLocaleTimeString()
+}
 
 export async function main(ns) {
   ns.tprint(`[${localeHHMMSS()}] Starting runHacking.js`)

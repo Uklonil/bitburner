@@ -1,4 +1,4 @@
-const baseUrl = 'https://raw.githubusercontent.com/uklonil/bitburner/master/'
+const baseUrl = 'https://raw.githubusercontent.com/uklonil/bitburner/master/src/'
 const filesToDownload = [
   'common.js',
   'mainHack.js',

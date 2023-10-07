@@ -1,9 +1,15 @@
-import { localeHHMMSS } from "/common/common";
-
 let stockSymbols
 let corpus
 let underperformingShares
 const commission = 100000
+
+function localeHHMMSS(ms = 0) {
+  if (!ms) {
+    ms = new Date().getTime()
+  }
+
+  return new Date(ms).toLocaleTimeString()
+}
 
 function getMoney(ns) {
   return ns.getServerMoneyAvailable('home') - 5 * commission

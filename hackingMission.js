@@ -1,4 +1,4 @@
-import { keys } from '/common/settings.js'
+import {settings} from '/common/settings.js'
 import { getItem, setItem, localeHHMMSS} from '/common/common.js'
 // based on https://github.com/Penndrageist/bitburner-scripts/blob/master/scripts/HackingMission.js.js
 ;(function (document) {
@@ -443,7 +443,7 @@ import { getItem, setItem, localeHHMMSS} from '/common/common.js'
   }
 
   function getAuto() {
-    let auto = getItem(keys.doAuto) || false
+    let auto = getItem(settings.keys.doAuto) || false
     let reputation = 100000
     let reputationMax = 85000
     let minPlayerHackingSkill = 300

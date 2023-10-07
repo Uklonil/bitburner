@@ -1,4 +1,3 @@
-import * as settings from "/common/settings.js";
 export function getItem(key) {
   let item = localStorage.getItem(key)
 
@@ -64,6 +63,7 @@ export function serverInNetwork(hostname){
 
 export async function main(ns) {
   return {
+    settings,
     getItem,
     setItem,
     localeHHMMSS,

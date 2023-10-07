@@ -1,4 +1,4 @@
-import { hackPrograms } from '/common/settings.js'
+import {settings} from '/common/settings.js'
 import {serverInNetwork, setTextColor} from '/common/common.js'
 
 export async function main(ns) {
@@ -12,9 +12,9 @@ export async function main(ns) {
         await ns.print("You already has TOR");
     }
 
-    for(var i = 0; i < hackPrograms.length; i++){
-        while(!await ns.singularity.purchaseProgram(hackPrograms[i])){
-            await ns.print("Failed to purchase "+hackPrograms[i]);
+    for(var i = 0; i < settings.hackPrograms.length; i++){
+        while(!await ns.singularity.purchaseProgram(settings.hackPrograms[i])){
+            await ns.print("Failed to purchase "+settings.hackPrograms[i]);
             await ns.sleep(1000);
         }
     }

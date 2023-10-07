@@ -1,9 +1,9 @@
-import { keys } from "/common/settings.js"
+import { settings } from "/common/settings.js"
 import { getItem, localeHHMMSS, setTextColor } from '/common/common.js'
-import { hackItOut } from "/helpers/hackHelper.js";
+import {hackItOut} from "/helpers/hackHelper.js";
 
 export async function main(ns) {
-    getItem(keys.serverMap).forEach((server) => {
+    getItem(settings.keys.serverMap).forEach((server) => {
         ns.tprint(`${localeHHMMSS} - trying to root ${server.host}`);
         try{
             hackItOut(ns, server);
