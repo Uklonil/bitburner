@@ -148,6 +148,7 @@ export async function main(ns) {
       }
 
       targetRam = Math.min(targetRam, settings.maxGbRam)
+			targetRam = Math.max(targetRam, biggestCurrentServer)
 
       purchasedServers = getPurchasedServers(ns)
       if (targetRam > ns.getServerMaxRam(purchasedServers[0])) {
